@@ -6,11 +6,9 @@ JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
 # Note
 
-:::note warn
-Warning.
-This library is designed and implemented for **Pokémon RNG**, not for general use.
-For simulation and other applications, **please use another library.**
-:::
+> **Note**  
+> This library is designed and implemented for **Pokémon RNG**, not for general use.
+> For simulation and other applications, **please use another library.**
 
 # Features
 

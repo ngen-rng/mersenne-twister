@@ -26,6 +26,14 @@
   ],
   "author": "ngen-rng <ngen.rng@gmail.com> (https://github.com/ngen-rng/)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngen-rng/mersenne-twister/issues",
+    "email": "ngen.rng@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngen-rng/mersenne-twister.git"
+  },
   "engines": {
     "node": ">=14"
   },
