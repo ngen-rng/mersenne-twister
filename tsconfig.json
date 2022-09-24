@@ -2,19 +2,27 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "CommonJS",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    /* Checks */
+    "strict": true,
     "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
     "moduleResolution": "Node",
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "checkJs": true,
-    "strict": true,
     "lib": ["ESNext"],
-    "types": ["node", "jest"],
-    "outDir": "dist"
+    "types": ["node", "jest"]
   },
+  "include": ["src"],
   "typedocOptions": {
     "entryPoints": ["src/mersenne-twister.ts"],
     "out": "docs"
-  },
-  "include": ["src"]
+  }
 }

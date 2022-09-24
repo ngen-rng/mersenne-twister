@@ -6,22 +6,6 @@
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "run-p build:*",
-    "build:common": "tsc",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "test": "jest --coverage",
-    "lint": "run-s lint:*",
-    "lint:eslint": "eslint . --ext .ts,.tsx --fix",
-    "lint:prettier": "prettier --write .",
-    "prepare": "simple-git-hooks",
-    "typedoc": "rimraf docs && typedoc && run-p typedoc:*",
-    "typedoc:readme": "node -e \"require('fs').copyFileSync('README.md', 'docs/README.md')\"",
-    "typedoc:readme_ja": "node -e \"require('fs').copyFileSync('README.ja.md', 'docs/README.ja.md')\"",
-    "typedoc:license": "node -e \"require('fs').copyFileSync('LICENSE', 'docs/LICENSE')\"",
-    "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\""
-  },
   "files": [
     "dist"
   ],
@@ -43,6 +27,23 @@
   },
   "engines": {
     "node": ">=14"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:common": "tsc",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "test": "jest --coverage",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint . --ext .ts,.tsx --fix",
+    "lint:prettier": "prettier --write .",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "yarn build",
+    "typedoc": "rimraf docs && typedoc && run-p typedoc:*",
+    "typedoc:readme": "node -e \"require('fs').copyFileSync('README.md', 'docs/README.md')\"",
+    "typedoc:readme_ja": "node -e \"require('fs').copyFileSync('README.ja.md', 'docs/README.ja.md')\"",
+    "typedoc:license": "node -e \"require('fs').copyFileSync('LICENSE', 'docs/LICENSE')\"",
+    "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\""
   },
   "simple-git-hooks": {
     "pre-commit": "yarn test && yarn run lint"
