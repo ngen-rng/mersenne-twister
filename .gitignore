@@ -105,3 +105,6 @@ dist
 
 # Mac OS meta info file
 .DS_Store
+
+# VSCode setting file
+.vscode
