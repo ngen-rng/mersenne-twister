@@ -12,5 +12,9 @@
     "types": ["node", "jest"],
     "outDir": "dist"
   },
+  "typedocOptions": {
+    "entryPoints": ["src/mersenne-twister.ts"],
+    "out": "docs"
+  },
   "include": ["src"]
 }

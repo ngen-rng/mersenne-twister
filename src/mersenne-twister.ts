@@ -71,13 +71,13 @@ export class MersenneTwister {
 
   /**
    * Get the current count.
-   * @returns current count
+   * @returns Current count
    */
   public getCount = (): number => this.count;
 
   /**
    * Get the count of table calculations.
-   * @returns table calculations count
+   * @returns Table calculations count
    */
   public getTableCalcCount = (): number => this.tableCalcCount;
 
@@ -95,8 +95,10 @@ export class MersenneTwister {
 
   /**
    * Update state variable tables.
+   * @param count Count after table update
+   * @param table Update table
    */
-  public tableUpdate = (table: number[] = this.table, count = 0): void => {
+  public tableUpdate = (count = 0, table: number[] = this.table): void => {
     const t = table;
     this.count = count;
     for (let n = 0, len = this.tableCalcCount; n <= len; n++) {
@@ -141,7 +143,7 @@ export class MersenneTwister {
 
   /**
    * Get 32-bit precision random number value.
-   * @returns random number
+   * @returns Random number
    */
   public getRandom = (): number => {
     const y = this.table[this.count];
@@ -169,7 +171,7 @@ export class MersenneTwister {
   /**
    * Get random number values in an array of the specified length.
    * @param length Array length
-   * @returns
+   * @returns Array of random number
    */
   public slice = (length: number): number[] => {
     const sliceTable: number[] = [];
@@ -186,10 +188,7 @@ export class MersenneTwister {
       );
     }
 
-    const copyTable: number[] = [
-      ...this.table.slice(this.count, this.count + length),
-    ];
-    for (const it of copyTable) {
+    for (const it of this.table.slice(this.count, this.count + length)) {
       sliceTable.push(this.tempering(it));
     }
 

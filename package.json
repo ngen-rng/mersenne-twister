@@ -2,6 +2,7 @@
   "name": "@ngen-rng/mersenne-twister",
   "version": "0.1.0",
   "description": "JavaScript implementation of Mersenne Twister for Pokémon RNG.",
+  "private": false,
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -14,15 +15,21 @@
     "lint": "run-s lint:*",
     "lint:eslint": "eslint . --ext .ts,.tsx --fix",
     "lint:prettier": "prettier --write .",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "typedoc": "rimraf docs && typedoc && run-p typedoc:*",
+    "typedoc:readme": "node -e \"require('fs').copyFileSync('README.md', 'docs/README.md')\"",
+    "typedoc:readme_ja": "node -e \"require('fs').copyFileSync('README.ja.md', 'docs/README.ja.md')\"",
+    "typedoc:license": "node -e \"require('fs').copyFileSync('LICENSE', 'docs/LICENSE')\"",
+    "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\""
   },
   "files": [
     "dist"
   ],
   "keywords": [
     "pokemon",
-    "pokemon-rng",
-    "rng"
+    "rng",
+    "random",
+    "mersennetwister"
   ],
   "author": "ngen-rng <ngen.rng@gmail.com> (https://github.com/ngen-rng/)",
   "license": "MIT",
@@ -56,6 +63,7 @@
     "simple-git-hooks": "^2.8.0",
     "ts-jest": "^29.0.0",
     "ts-node": "^10.9.1",
+    "typedoc": "^0.23.15",
     "typescript": "^4.8.3"
   }
 }
