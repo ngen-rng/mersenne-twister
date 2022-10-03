@@ -25,38 +25,42 @@ $ npm i @ngen-rng/mersenne-twister
 ```js
 import { MersenneTwister } from '@ngen-rng/mersenne-twister';
 
-// MT初期化時のテーブル計算量は624回
+// MT初期化時のテーブル計算量は624回となる。
 const mt1 = new MersenneTwister(0xadfa2178);
 
-// getRandom関数で乱数値を得る
+// getRandom関数で乱数値を取得する。
 mt1.getRandom(); // 4204083817
 
-// slice関数で乱数値を得る
-// slice関数は指定した長さの配列を返す
-// また、slice関数は状態を更新しない
-mt1.slice(1)[0]; // 2076987897
+// 現在の乱数テーブル参照インデックスを取得する。
+mt1.getIndex(); // 2
+
+// slice関数で乱数値の配列を取得する。
+// slice関数は開始と終了を指定する。
+// また、slice関数は状態を更新しない。
+const slice1 = mt1.slice(2, 3)[0]; // 2076987897
 mt1.getRandom(); // 2076987897
 
-// テーブル更新時の計算量は624回
+// テーブル更新時の計算量も624回となる。
 mt1.tableUpdate();
 
-// MT初期化時のテーブル計算量を402回に軽減する
+// MT初期化時のテーブル計算量を402回に軽減する。
 const mt2 = new MersenneTwister(0xadfa2178, 402);
 
-// 乱数値を得る(mt1と同じ値)
-expect(mt2.getRandom()).toEqual(4204083817);
+// 乱数値を取得する。(mt1と同じ値)
+mt2.getRandom(); // 4204083817
 
-// テーブ更新時の計算量は402回
+// テーブ更新時の計算量も402回となる。
 mt2.tableUpdate();
 
-// テーブル計算量を402/624に軽減した場合、同じ値を得られる範囲は0～5となる
-mt1.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
-mt2.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+// 402/624に軽減した場合、元のMTと同様の値を得られる範囲は0～5となる。
+mt1.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+mt2.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
 
-// 乱数値を指定した数だけ破棄する
+// 乱数値を指定した数だけ破棄する。
 mt1.discard(6);
 mt2.discard(6);
 
+// テーブル計算量が異なるため、mt1とmt2の値が同じとは限らなくなる。
 mt1.getRandom() >>> 27; // 29
 mt2.getRandom() >>> 27; // 15
 ```

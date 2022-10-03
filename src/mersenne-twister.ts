@@ -39,7 +39,7 @@ const M = 397;
  * 32-bit precision MersenneTwister
  */
 export class MersenneTwister {
-  private count = 1;
+  private index = 1;
   private table = Array<number>(N).fill(0);
   private tableCalcCount: number;
 
@@ -62,18 +62,16 @@ export class MersenneTwister {
 
     for (let n = 1, t = this.table, len = this.tableCalcCount; n <= len; n++) {
       const result = (t[n - 1] >>> 30) ^ t[n - 1];
-      const value = Number(
-        BigInt.asUintN(32, BigInt(result) * 0x6c078965n + BigInt(n))
-      );
-      t[n] = value;
+      const value = this.multiplyUInt32(result, 0x6c078965) + n;
+      t[n] = value >>> 0;
     }
   }
 
   /**
-   * Get the current count.
-   * @returns Current count
+   * Get the current index.
+   * @returns Current index
    */
-  public getCount = (): number => this.count;
+  public getIndex = (): number => this.index;
 
   /**
    * Get the count of table calculations.
@@ -88,7 +86,7 @@ export class MersenneTwister {
   public clone = (): MersenneTwister => {
     const cmt = new MersenneTwister(0x0, 0);
     cmt.table = [...this.table];
-    cmt.count = this.count;
+    cmt.index = this.index;
     cmt.tableCalcCount = this.tableCalcCount;
     return cmt;
   };
@@ -100,7 +98,7 @@ export class MersenneTwister {
    */
   public tableUpdate = (count = 0, table: number[] = this.table): void => {
     const t = table;
-    this.count = count;
+    this.index = count;
     for (let n = 0, len = this.tableCalcCount; n <= len; n++) {
       if (n <= 226) {
         t[n] = this.update(n, n + 1, n + M);
@@ -112,6 +110,16 @@ export class MersenneTwister {
     }
   };
 
+  /**
+   * @todo This method should be extracted to a separate library.
+   */
+  private multiplyUInt32 = (n: number, multiplier: number): number => {
+    const value =
+      ((((n & 0xffff0000) >>> 16) * multiplier) << 16) +
+      (n & 0x0000ffff) * multiplier;
+    return value >>> 0;
+  };
+
   private update = (
     A: number,
     B: number,
@@ -119,26 +127,26 @@ export class MersenneTwister {
     table: number[] = this.table
   ) => {
     const t = table;
-    const k = Array<bigint>(2);
-    k[0] = (BigInt(t[A]) & 0x80000000n) | (BigInt(t[B]) & 0x7fffffffn);
-    k[1] = (k[0] >> 1n) ^ BigInt(t[C]);
+    const k = Array<number>(2);
+    k[0] = (t[A] & 0x80000000) | (t[B] & 0x7fffffff);
+    k[1] = (k[0] >>> 1) ^ t[C];
 
-    if (k[0] & 1n) {
-      t[A] = Number(BigInt.asUintN(32, k[1] ^ 0x9908b0dfn));
+    if (k[0] & 1) {
+      t[A] = k[1] ^ 0x9908b0df;
     } else {
-      t[A] = Number(BigInt.asUintN(32, k[1]));
+      t[A] = k[1];
     }
 
     return t[A];
   };
 
   private tempering = (value: number): number => {
-    let y = BigInt(value);
-    y ^= y >> 11n;
-    y ^= (y << 7n) & 0x9d2c5680n;
-    y ^= (y << 15n) & 0xefc60000n;
-    y ^= y >> 18n;
-    return Number(BigInt.asUintN(32, y));
+    let y = value;
+    y ^= y >>> 11;
+    y ^= (y << 7) & 0x9d2c5680;
+    y ^= (y << 15) & 0xefc60000;
+    y ^= y >>> 18;
+    return y >>> 0;
   };
 
   /**
@@ -146,7 +154,7 @@ export class MersenneTwister {
    * @returns Random number
    */
   public getRandom = (): number => {
-    const y = this.table[this.count];
+    const y = this.table[this.index];
     this.discard(1);
 
     return this.tempering(y);
@@ -154,41 +162,38 @@ export class MersenneTwister {
 
   /**
    * Discards the specified number of random numbers.
-   * @param size Number of pieces to discard
+   * @param count Number of pieces to discard
    */
-  public discard = (size: number): void => {
-    this.count += size;
+  public discard = (count: number): void => {
+    this.index += count;
 
-    if (this.count >= N) {
-      for (let i = 0, len = (this.count / N) | 0; i < len; i++) {
+    if (this.index >= N) {
+      for (let i = 0, len = (this.index / N) | 0; i < len; i++) {
         this.tableUpdate();
       }
 
-      this.count %= N;
+      this.index %= N;
     }
   };
 
   /**
    * Get random number values in an array of the specified length.
-   * @param length Array length
+   * @param start
+   * @param end
    * @returns Array of random number
    */
-  public slice = (length: number): number[] => {
+  public slice = (start: number, end: number): number[] => {
     const sliceTable: number[] = [];
 
-    if (length <= 0) {
-      throw new Error('The arguments must be greater than 0.');
+    if (start < 0 || start > this.tableCalcCount) {
+      throw new Error(``);
     }
 
-    if (length > this.tableCalcCount - this.count) {
-      throw new Error(
-        `The argument must be less than or equal to tableCalcCount:${
-          this.tableCalcCount
-        } - count:${this.count} = ${this.tableCalcCount - this.count}.`
-      );
+    if (end <= 0 || start + end > this.tableCalcCount) {
+      throw new Error(``);
     }
 
-    for (const it of this.table.slice(this.count, this.count + length)) {
+    for (const it of this.table.slice(start, end)) {
       sliceTable.push(this.tempering(it));
     }
 

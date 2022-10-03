@@ -4,23 +4,23 @@
 
 JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
-# Note
+## Note
 
 > **Note**  
 > This library is designed and implemented for **Pokémon RNG**, not for general use.
 > For simulation and other applications, **please use another library.**
 
-# Features
+## Features
 
 From the original Mersenne Twister, we have devised a device that can reduce the amount of table computation when updating internal state and replicating instances.
 
-# Installation
+## Installation
 
 ```bash
 $ npm i @ngen-rng/mersenne-twister
 ```
 
-# Usage
+## Usage
 
 ```js
 import { MersenneTwister } from '@ngen-rng/mersenne-twister';
@@ -31,10 +31,13 @@ const mt1 = new MersenneTwister(0xadfa2178);
 // Get a random number value with the 'getRandom' function.
 mt1.getRandom(); // 4204083817
 
-// Get a random number value with the 'slice' function.
-// The 'slice' function returns an array of the specified length.
+// Get the current random number table reference index.
+mt1.getIndex(); // 2
+
+// Get an array of random values with the 'slice' function.
+// The 'slice' function specifies the start and end.
 // Also, the 'slice' function does not update the state.
-mt1.slice(1)[0]; // 2076987897
+const slice1 = mt1.slice(2, 3)[0]; // 2076987897
 mt1.getRandom(); // 2076987897
 
 // The amount of calculations for table updates is also 624 times.
@@ -57,16 +60,17 @@ mt2.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
 mt1.discard(6);
 mt2.discard(6);
 
+// Because of the different table computations, the values of mt1 and mt2 will not necessarily be the same.
 mt1.getRandom() >>> 27; // 29
 mt2.getRandom() >>> 27; // 15
 ```
 
-# Author
+## Author
 
 - Author: ngen-rng
 - E-mail: ngen.rng@gmail.com
 
-# License
+## License
 
 - @ngen-rng/mersenne-twister: [MIT LICENSE](./LICENSE)
 - The original Mersenne Twister: [MIT LICENSE](./LICENSE_MT)

@@ -18,10 +18,10 @@ describe('MersenneTwister', () => {
     expect(mt.getTableCalcCount()).toEqual(623);
   });
 
-  test('getCount', () => {
+  test('getIndex', () => {
     const mt = new MersenneTwister(Date.now().valueOf());
     mt.getRandom();
-    expect(mt.getCount()).toEqual(2);
+    expect(mt.getIndex()).toEqual(2);
   });
 
   test('getTableCalcCount:402', () => {
@@ -44,12 +44,12 @@ describe('MersenneTwister', () => {
   test('tableUpdate and slice, getRandom', () => {
     const mt = new MersenneTwister(0x0, 402);
     mt.tableUpdate();
-    const part = mt.slice(6);
+    const slice = mt.slice(0, 6);
     const rand: number[] = [];
     for (let i = 0; i < 6; i++) {
       rand.push(mt.getRandom());
     }
-    expect(part).toEqual(rand);
+    expect(slice).toEqual(rand);
   });
 
   test('discard', () => {
@@ -64,63 +64,29 @@ describe('MersenneTwister', () => {
     expect(mt.getRandom()).toEqual(cmt.getRandom());
   });
 
-  test('slice:0', () => {
+  test('slice:-1,1', () => {
     const mt = new MersenneTwister(Date.now().valueOf());
-    expect(() => mt.slice(0)).toThrow();
+    expect(() => mt.slice(-1, 1)).toThrow();
   });
 
-  test('slice:1', () => {
+  test('slice:0,0', () => {
     const mt = new MersenneTwister(Date.now().valueOf());
-    const part = mt.slice(1)[0];
+    expect(() => mt.slice(0, 0)).toThrow();
+  });
+
+  test('slice:1,2', () => {
+    const mt = new MersenneTwister(Date.now().valueOf());
+    const slice = mt.slice(1, 2)[0];
     const get = mt.getRandom();
-    expect(part).toEqual(get);
+    expect(slice).toEqual(get);
   });
 
   {
     const N = 402;
-    test(`slice:${N.toString()}`, () => {
+    test(`tableCalcCount:${N.toString()} and slice:0,${N.toString()}`, () => {
       const mt = new MersenneTwister(Date.now().valueOf(), N);
-      const count = mt.getCount();
-      expect(mt.slice(N - count).length).toEqual(N - count);
-    });
-  }
-
-  {
-    const N = 403;
-    test(`slice throw error:${N.toString()}`, () => {
-      const mt = new MersenneTwister(Date.now().valueOf(), N);
-      expect(() => mt.slice(N)).toThrow();
-    });
-  }
-
-  {
-    const N = 622;
-    test(`slice:${N.toString()}`, () => {
-      const mt = new MersenneTwister(Date.now().valueOf());
-      const part = mt.slice(N)[N - 1];
-      mt.discard(N - 1);
-      const get = mt.getRandom();
-      expect(part).toEqual(get);
-    });
-  }
-
-  {
-    const N = 623;
-    test(`slice:${N.toString()}, tableUpdate`, () => {
-      const mt = new MersenneTwister(Date.now().valueOf());
-      mt.tableUpdate();
-      const part = mt.slice(N)[N - 1];
-      mt.discard(N - 1);
-      const get = mt.getRandom();
-      expect(part).toEqual(get);
-    });
-  }
-
-  {
-    const N = 623;
-    test(`slice throw error:${N.toString()}`, () => {
-      const mt = new MersenneTwister(Date.now().valueOf());
-      expect(() => mt.slice(N)).toThrow();
+      const index = mt.getIndex();
+      expect(mt.slice(0, N - index).length).toEqual(N - index);
     });
   }
 
@@ -128,47 +94,51 @@ describe('MersenneTwister', () => {
     const N = 624;
     test(`slice throw error:${N.toString()}`, () => {
       const mt = new MersenneTwister(Date.now().valueOf());
-      expect(() => mt.slice(N)).toThrow();
+      expect(() => mt.slice(0, N)).toThrow();
     });
   }
 
   test('usage', () => {
-    // MT初期化時のテーブル計算量は624回
+    // MT初期化時のテーブル計算量は624回となる。
     const mt1 = new MersenneTwister(0xadfa2178);
 
-    // getRandom関数で乱数値を得る
+    // getRandom関数で乱数値を取得する。
     expect(mt1.getRandom()).toEqual(4204083817);
 
-    // slice関数で乱数値を得る
-    // slice関数は指定した長さの配列を返す
-    // また、slice関数は状態を更新しない
-    const slice1 = mt1.slice(1)[0];
+    // 現在の乱数テーブル参照インデックスを取得する。
+    expect(mt1.getIndex()).toEqual(2);
+
+    // slice関数で乱数値の配列を取得する。
+    // slice関数は配列と同じように開始と終了を指定する。
+    // また、slice関数は状態を更新しない。
+    const slice1 = mt1.slice(2, 3)[0];
     expect(slice1).toEqual(2076987897);
     expect(slice1).toEqual(mt1.getRandom());
 
-    // テーブル更新時の計算量も624回
+    // テーブル更新時の計算量も624回となる。
     mt1.tableUpdate();
 
-    // MT初期化時のテーブル計算量を402回に軽減する
+    // MT初期化時のテーブル計算量を402回に軽減する。
     const mt2 = new MersenneTwister(0xadfa2178, 402);
 
-    // 乱数値を得る(mt1と同じ値)
+    // 乱数値を取得する。(mt1と同じ値)
     expect(mt2.getRandom()).toEqual(4204083817);
 
-    // テーブ更新時の計算量も402回
+    // テーブ更新時の計算量も402回となる。
     mt2.tableUpdate();
 
-    // 402/624に軽減した場合、元のMTと同様の値を得られる範囲は0～5となる
-    const ivs1 = mt1.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
-    const ivs2 = mt2.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+    // 402/624に軽減した場合、元のMTと同様の値を得られる範囲は0～5となる。
+    const ivs1 = mt1.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+    const ivs2 = mt2.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
 
     expect(ivs1).toEqual([31, 31, 31, 31, 31, 31]);
     expect(ivs1).toEqual(ivs2);
 
-    // 乱数値を指定した数だけ破棄する
+    // 乱数値を指定した数だけ破棄する。
     mt1.discard(6);
     mt2.discard(6);
 
+    // テーブル計算量が異なるため、mt1とmt2の値が同じとは限らなくなる。
     expect(mt1.getRandom() >>> 27).toEqual(29);
     expect(mt2.getRandom() >>> 27).toEqual(15);
   });
