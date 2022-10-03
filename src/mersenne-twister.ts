@@ -186,11 +186,15 @@ export class MersenneTwister {
     const sliceTable: number[] = [];
 
     if (start < 0 || start > this.tableCalcCount) {
-      throw new Error(``);
+      throw new Error(
+        `Do not specify a start less than 0 or greater than the number of table calculations:${this.tableCalcCount}.`
+      );
     }
 
     if (end <= 0 || start + end > this.tableCalcCount) {
-      throw new Error(``);
+      throw new Error(
+        `Do not specify an end less than 0 or a start + end greater than the number of table calculations:${this.tableCalcCount}.`
+      );
     }
 
     for (const it of this.table.slice(start, end)) {
