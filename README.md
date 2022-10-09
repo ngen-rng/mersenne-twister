@@ -1,6 +1,6 @@
-[English](./README.md) | [日本語](./README.ja.md)
-
 # Mersenne Twister
+
+[English](./README.md) | [日本語](./README.ja.md)
 
 JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
@@ -17,7 +17,9 @@ From the original Mersenne Twister, we have devised a device that can reduce the
 ## Installation
 
 ```bash
-$ npm i @ngen-rng/mersenne-twister
+$ npm install @ngen-rng/mersenne-twister
+# or
+$ yarn add @ngen-rng/mersenne-twister
 ```
 
 ## Usage

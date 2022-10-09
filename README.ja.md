@@ -1,6 +1,6 @@
-[English](./README.md) | [日本語](./README.ja.md)
-
 # Mersenne Twister
+
+[English](./README.md) | [日本語](./README.ja.md)
 
 ポケモン乱数調整用の Mersenne Twister の JavaScript 実装です。
 
@@ -17,7 +17,9 @@
 ## インストール
 
 ```bash
-$ npm i @ngen-rng/mersenne-twister
+$ npm install @ngen-rng/mersenne-twister
+# or
+$ yarn add @ngen-rng/mersenne-twister
 ```
 
 ## 使い方
