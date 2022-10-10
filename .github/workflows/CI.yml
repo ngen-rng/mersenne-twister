@@ -34,4 +34,4 @@ jobs:
         with:
           output: report-markdown
           coverage-file: ./coverage/coverage-final.json
-          base-coverage-file: ./coverage/coverage-final.json
+          base-coverage-file: ./coverage/master/coverage-final.json
