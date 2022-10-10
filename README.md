@@ -6,7 +6,7 @@ JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
 ## Note
 
-> **Note**  
+> **Note**
 > This library is designed and implemented for **Pokémon RNG**, not for general use.
 > For simulation and other applications, **please use another library.**
 
@@ -55,8 +55,8 @@ mt2.getRandom(); // 4204083817
 mt2.tableUpdate();
 
 // If the table calculation is reduced to 402/624, the range to obtain the same value is 0 to 5.
-mt1.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
-mt2.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+mt1.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+mt2.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
 
 // Discards a specified number of random values.
 mt1.discard(6);
