@@ -24,7 +24,8 @@
     "typedoc:readme": "node -e \"require('fs').copyFileSync('README.md', 'docs/README.md')\"",
     "typedoc:readme_ja": "node -e \"require('fs').copyFileSync('README.ja.md', 'docs/README.ja.md')\"",
     "typedoc:license": "node -e \"require('fs').copyFileSync('LICENSE', 'docs/LICENSE')\"",
-    "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\""
+    "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\"",
+    "coverage:ci": "jest --coverage --silent --ci --testLocationInResults --json --outputFile=\"report.json\""
   },
   "repository": {
     "type": "git",
