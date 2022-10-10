@@ -1,12 +1,14 @@
 # Mersenne Twister
 
+[![Actions Status: CI](https://github.com/ngen-rng/mersenne-twister/workflows/CI/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CI")
+
 [English](./README.md) | [日本語](./README.ja.md)
 
 ポケモン乱数調整用の Mersenne Twister の JavaScript 実装です。
 
 ## ノート
 
-> **Note**  
+> **Note**
 > このライブラリは一般的な使用向けではなく、**ポケモン乱数調整**向けに設計及び実装されています。
 > シミュレーション等の用途には**別のライブラリを使用してください。**
 

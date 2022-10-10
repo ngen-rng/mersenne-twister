@@ -1,5 +1,7 @@
 # Mersenne Twister
 
+[![Actions Status: CI](https://github.com/ngen-rng/mersenne-twister/workflows/CI/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CI")
+
 [English](./README.md) | [日本語](./README.ja.md)
 
 JavaScript implementation of Mersenne Twister for Pokémon RNG.
