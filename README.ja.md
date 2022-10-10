@@ -1,6 +1,8 @@
 # Mersenne Twister
 
 [![Actions Status: CI](https://github.com/ngen-rng/mersenne-twister/workflows/CI/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CI")
+[![Actions Status: CodeQL](https://github.com/ngen-rng/mersenne-twister/workflows/CodeQL/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CodeQL")
+[![Actions Status: Dependency Review](https://github.com/ngen-rng/mersenne-twister/workflows/Dependency%20Review/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"Dependency+Review")
 
 [English](./README.md) | [日本語](./README.ja.md)
 
