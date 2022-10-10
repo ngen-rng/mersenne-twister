@@ -34,3 +34,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           test-script: yarn coverage:ci
+
+      - name: Run eslint with reviewdog
+        uses: reviewdog/action-eslint@v1.16.1
