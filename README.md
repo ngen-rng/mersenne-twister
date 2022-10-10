@@ -14,7 +14,7 @@ JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
 ## Features
 
-From the original Mersenne Twister, we have devised a device that can reduce the amount of table computation when updating internal state and replicating instances.
+From the original Mersenne Twister, we have devised a way to reduce the amount of table calculations for instance creation and internal state updates.
 
 ## Installation
 
