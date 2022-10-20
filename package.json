@@ -27,6 +27,10 @@
     "typedoc:license_mt": "node -e \"require('fs').copyFileSync('LICENSE_MT', 'docs/LICENSE_MT')\"",
     "coverage:ci": "jest --coverage --silent --ci --testLocationInResults --json --outputFile=\"report.json\""
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/ngen-rng"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ngen-rng/mersenne-twister.git"
