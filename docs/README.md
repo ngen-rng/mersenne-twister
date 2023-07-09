@@ -1,23 +1,41 @@
-[English](./README.md) | [日本語](./README.ja.md)
-
 # Mersenne Twister
+
+[![Actions Status: CI](https://github.com/ngen-rng/mersenne-twister/workflows/CI/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CI")
+[![Actions Status: CodeQL](https://github.com/ngen-rng/mersenne-twister/workflows/CodeQL/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CodeQL")
+[![Actions Status: Dependency Review](https://github.com/ngen-rng/mersenne-twister/workflows/Dependency%20Review/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"Dependency+Review")
+
+[English](./README.md) | [日本語](./README.ja.md)
 
 JavaScript implementation of Mersenne Twister for Pokémon RNG.
 
 ## Note
 
-> **Note**  
+> **Note**
 > This library is designed and implemented for **Pokémon RNG**, not for general use.
 > For simulation and other applications, **please use another library.**
 
 ## Features
 
-From the original Mersenne Twister, we have devised a device that can reduce the amount of table computation when updating internal state and replicating instances.
+From the original Mersenne Twister, we have devised a way to reduce the amount of table calculations for instance creation and internal state updates.
 
 ## Installation
 
-```bash
-$ npm i @ngen-rng/mersenne-twister
+Add the following line to the .npmrc file
+
+```npmrc
+@ngen-rng:registry="https://npm.pkg.github.com"
+```
+
+npm
+
+```sh
+npm install @ngen-rng/mersenne-twister
+```
+
+yarn
+
+```sh
+yarn add @ngen-rng/mersenne-twister
 ```
 
 ## Usage
@@ -53,8 +71,8 @@ mt2.getRandom(); // 4204083817
 mt2.tableUpdate();
 
 // If the table calculation is reduced to 402/624, the range to obtain the same value is 0 to 5.
-mt1.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
-mt2.slice(6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+mt1.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
+mt2.slice(0, 6).map((p) => p >>> 27); // [31, 31, 31, 31, 31, 31]
 
 // Discards a specified number of random values.
 mt1.discard(6);
@@ -68,7 +86,7 @@ mt2.getRandom() >>> 27; // 15
 ## Author
 
 - Author: ngen-rng
-- E-mail: ngen.rng@gmail.com
+- E-mail: <ngen.rng@gmail.com>
 
 ## License
 
