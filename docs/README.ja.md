@@ -1,23 +1,41 @@
-[English](./README.md) | [日本語](./README.ja.md)
-
 # Mersenne Twister
 
-ポケモン乱数調整用の Mersenne Twister の JavaScript 実装です。
+[![Actions Status: CI](https://github.com/ngen-rng/mersenne-twister/workflows/CI/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CI")
+[![Actions Status: CodeQL](https://github.com/ngen-rng/mersenne-twister/workflows/CodeQL/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"CodeQL")
+[![Actions Status: Dependency Review](https://github.com/ngen-rng/mersenne-twister/workflows/Dependency%20Review/badge.svg)](https://github.com/ngen-rng/mersenne-twister/actions?query=workflow%3A"Dependency+Review")
+
+[English](./README.md) | [日本語](./README.ja.md)
+
+ポケモン乱数調整用のMersenne TwisterのJavaScript実装です。
 
 ## ノート
 
-> **Note**  
+> **Note**
 > このライブラリは一般的な使用向けではなく、**ポケモン乱数調整**向けに設計及び実装されています。
 > シミュレーション等の用途には**別のライブラリを使用してください。**
 
 ## 特徴
 
-元々の Mersenne Twister から、内部状態の更新とインスタンス複製時のテーブル計算量を軽減できる工夫をしています。
+元々のMersenne Twisterから、インスタンス作成時と内部状態の更新のテーブル計算量を軽減できる工夫をしています。
 
 ## インストール
 
-```bash
-$ npm i @ngen-rng/mersenne-twister
+.npmrcファイルに以下の行を追加する。
+
+```npmrc
+@ngen-rng:registry="https://npm.pkg.github.com"
+```
+
+npm
+
+```sh
+npm install @ngen-rng/mersenne-twister
+```
+
+yarn
+
+```sh
+yarn add @ngen-rng/mersenne-twister
 ```
 
 ## 使い方
@@ -68,10 +86,10 @@ mt2.getRandom() >>> 27; // 15
 ## 作成者
 
 - 作成者: ngen-rng
-- E-mail: ngen.rng@gmail.com
+- E-mail: <ngen.rng@gmail.com>
 
 ## ライセンス
 
 - @ngen-rng/mersenne-twister: [MIT LICENSE](./LICENSE)
-- オリジナルの Mersenne Twister: [MIT LICENSE](./LICENSE_MT)
+- オリジナルのMersenne Twister: [MIT LICENSE](./LICENSE_MT)
   - 参考: [オリジナルの Mersenne Twister アルゴリズム](http://www.math.sci.hiroshima-u.ac.jp/m-mat/MT/mt.html 'Mersenne Twister Home Page')
