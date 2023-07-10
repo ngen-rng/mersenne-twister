@@ -38,7 +38,7 @@ jobs:
           test-script: yarn coverage:ci
 
       - name: Run eslint with reviewdog
-        uses: reviewdog/action-eslint@v1.17
+        uses: reviewdog/action-eslint@v1.17.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
