@@ -42,3 +42,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
+      - run: ls -lha /home/runner/work/_actions/reviewdog/action-eslint/
+      - run: ls -lha /home/runner/work/_actions/reviewdog/action-eslint/v1.17.0/
