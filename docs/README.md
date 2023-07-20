@@ -6,12 +6,12 @@
 
 [English](./README.md) | [日本語](./README.ja.md)
 
-JavaScript implementation of Mersenne Twister for Pokémon RNG.
+JavaScript implementation of Mersenne Twister for Pokémon RNG Manipulation.
 
 ## Note
 
 > **Note**
-> This library is designed and implemented for **Pokémon RNG**, not for general use.
+> This library is designed and implemented for **Pokémon RNG Manipulation**, not for general use.
 > For simulation and other applications, **please use another library.**
 
 ## Features
