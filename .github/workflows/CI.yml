@@ -28,8 +28,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm audit
       - run: npm ci
+      - run: npm audit
       - run: npm run build --if-present
 
       - uses: artiomtr/jest-coverage-report-action@v2.0-rc.3
