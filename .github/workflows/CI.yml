@@ -29,7 +29,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm audit fix
+      #- run: npm audit fix
       - run: npm run build --if-present
 
       - uses: artiomtr/jest-coverage-report-action@v2.0-rc.3
@@ -41,7 +41,7 @@ jobs:
       - run: ls -lha /home/runner/work/_actions/reviewdog/action-eslint/
       - run: ls -lha /home/runner/work/_actions/reviewdog/action-eslint/v1.17.0/
       - name: Run eslint with reviewdog
-        uses: reviewdog/action-eslint@v1.17.0
+        uses: reviewdog/action-eslint@v1.18.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
