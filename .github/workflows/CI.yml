@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x, 20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -37,12 +37,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           test-script: yarn coverage:ci
-
-      - run: ls -lha /home/runner/work/_actions/reviewdog/action-eslint/
-      - run: pwd
-      - run: ls -lha
       - name: Run eslint with reviewdog
-        uses: reviewdog/action-eslint@v1.17.0
+        uses: reviewdog/action-eslint@v1.18.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
