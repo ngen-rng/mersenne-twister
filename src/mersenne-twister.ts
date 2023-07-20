@@ -113,25 +113,25 @@ export class MersenneTwister {
   /**
    * @todo This method should be extracted to a separate library.
    */
-  private multiplyUInt32 = (n: number, multiplier: number): number => {
+  private readonly multiplyUInt32 = (n: number, multiplier: number): number => {
     const value =
       ((((n & 0xffff0000) >>> 16) * multiplier) << 16) +
       (n & 0x0000ffff) * multiplier;
     return value >>> 0;
   };
 
-  private update = (
+  private readonly update = (
     A: number,
     B: number,
     C: number,
     table: number[] = this.table
-  ) => {
+  ): number => {
     const t = table;
     const k = Array<number>(2);
     k[0] = (t[A] & 0x80000000) | (t[B] & 0x7fffffff);
     k[1] = (k[0] >>> 1) ^ t[C];
 
-    if (k[0] & 1) {
+    if ((k[0] & 1) === 1) {
       t[A] = k[1] ^ 0x9908b0df;
     } else {
       t[A] = k[1];
@@ -140,7 +140,7 @@ export class MersenneTwister {
     return t[A];
   };
 
-  private tempering = (value: number): number => {
+  private readonly tempering = (value: number): number => {
     let y = value;
     y ^= y >>> 11;
     y ^= (y << 7) & 0x9d2c5680;

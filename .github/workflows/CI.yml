@@ -13,9 +13,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write
+
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x, 20.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,6 +29,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+      #- run: npm audit fix
       - run: npm run build --if-present
 
       - uses: artiomtr/jest-coverage-report-action@v2.0-rc.3
@@ -33,9 +37,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           package-manager: yarn
           test-script: yarn coverage:ci
-
       - name: Run eslint with reviewdog
-        uses: reviewdog/action-eslint@v1.16.1
+        uses: reviewdog/action-eslint@v1.18.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
+          eslint_flags: './src/**/*.{ts,tsx}'
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-import { MersenneTwister } from '../src/mersenne-twister';
+import { MersenneTwister } from './mersenne-twister';
 
 describe('MersenneTwister', () => {
   test('constructor tableCalcCount:0', () => {
